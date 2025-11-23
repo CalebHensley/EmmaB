@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emma's Website - A beautiful mobile-optimized experience">
+    <meta name="author" content="Emma">
+    <title>Emma's Website</title>
+    <link rel="preload" as="image" href="BackgroundBase.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background-image: url('BackgroundBase.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Mobile-first responsive design */
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.7;
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 15px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Phone-specific optimizations */
+        @media (max-width: 768px) {
+            body {
+                background-attachment: scroll; /* Better performance on mobile */
+            }
+            
+            .content {
+                padding: 25px;
+                margin: 15px;
+                border-radius: 12px;
+            }
+
+            .cta-button {
+                padding: 15px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Very small phones */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+                max-width: 95%;
+            }
+        }
+
+        /* Landscape orientation on phones */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .container {
+                justify-content: flex-start;
+                padding-top: 30px;
+            }
+            
+            .content {
+                padding: 20px 30px;
+            }
+        }
+
+        /* Loading animation */
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Netlify badge - remove this if you don't want it */
+        .netlify-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .netlify-badge {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content fade-in">
+            <h1>Welcome to Emma's Website</h1>
+            <p>Experience beautiful design optimized for every device. This site showcases how stunning visuals can create an immersive mobile experience.</p>
+            <p>Built with modern web technologies and deployed seamlessly with Netlify.</p>
+            <a href="#" class="cta-button" onclick="alert('Add your link here!')">Get Started</a>
+        </div>
+    </div>
+
+    <div class="netlify-badge">
+        Deployed on Netlify
+    </div>
+
+    <script>
+        // Progressive enhancement and performance optimizations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy load background image for better performance
+            const img = new Image();
+            img.onload = function() {
+                document.body.classList.add('bg-loaded');
+            };
+            img.src = 'BackgroundBase.png';
+
+            // Add smooth scroll behavior
+            document.documentElement.style.scrollBehavior = 'smooth';
+
+            // Basic analytics placeholder - replace with your analytics
+            console.log('Page loaded successfully on', new Date().toISOString());
+        });
+
+        // Handle orientation changes on mobile
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                window.scrollTo(0, 0);
+            }, 100);
+        });
+    </script>
+</body>
+</html>
