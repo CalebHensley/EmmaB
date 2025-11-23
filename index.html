@@ -12,21 +12,19 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            height: 100vh;
+        }        body {
+            min-height: 100vh;
             background-image: url('BackgroundBase.png');
-            background-size: cover;
-            background-position: center;
+            background-size: contain;
+            background-position: top center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: scroll;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         /* Mobile-first responsive design */
         .container {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -149,9 +147,9 @@
 <body>
     <div class="container">
         <div class="content fade-in">
-            <h1>Welcome to Emma's Website</h1>
-            <p>Experience beautiful design optimized for every device. This site showcases how stunning visuals can create an immersive mobile experience.</p>
-            <p>Built with modern web technologies and deployed seamlessly with Netlify.</p>
+            <h1>Emma Beckham</h1>
+            <p>Miami based model.</p>
+            <p>Website coming soon.</p>
             <a href="#" class="cta-button" onclick="alert('Add your link here!')">Get Started</a>
         </div>
     </div>
