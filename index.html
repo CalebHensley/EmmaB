@@ -48,11 +48,40 @@
             opacity: 0;
             transform: translateY(50px);
             transition: opacity 0.5s ease, transform 0.5s ease;
+            cursor: pointer;
         }
 
         .photo.visible {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Fullscreen zoom modal */
+        .zoom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            overflow: hidden;
+            touch-action: pinch-zoom;
+        }
+
+        .zoom-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .zoom-modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: zoom-out;
+            touch-action: pinch-zoom;
         }
 
         /* Phone-specific optimizations */
@@ -95,6 +124,11 @@
         <img src="p6.png" alt="Photo 6" class="photo">
     </div>
 
+    <!-- Fullscreen zoom modal -->
+    <div class="zoom-modal" id="zoomModal">
+        <img src="" alt="Zoomed photo" id="zoomedImage">
+    </div>
+
     <div class="netlify-badge">
         Deployed on Netlify
     </div>
@@ -107,7 +141,7 @@
             img.onload = function() {
                 document.body.classList.add('bg-loaded');
             };
-            img.src = 'BlackBG1.png';
+            img.src = 'BlackBG1.png?v=2';
 
             // Add smooth scroll behavior
             document.documentElement.style.scrollBehavior = 'smooth';
@@ -132,6 +166,25 @@
             
             // Initial check
             checkPhotos();
+
+            // Zoom functionality
+            const zoomModal = document.getElementById('zoomModal');
+            const zoomedImage = document.getElementById('zoomedImage');
+            
+            // Click photo to zoom in
+            photos.forEach(photo => {
+                photo.addEventListener('click', function() {
+                    zoomedImage.src = this.src;
+                    zoomModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Click zoomed image or modal to close
+            zoomModal.addEventListener('click', function() {
+                zoomModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
         });
 
         // Handle orientation changes on mobile
