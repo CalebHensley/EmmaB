@@ -29,62 +29,33 @@
         }        /* Set body height to match actual image height */
         body {
             height: 14400px; /* Match your image's actual height */
-        }/* Mobile-first responsive design */
-        .container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        }
+
+        /* Photo gallery container */
+        .gallery {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 5vh 0;
+            position: relative;
             z-index: 1;
         }
 
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 90%;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .photo {
+            width: 90vw;
+            height: 90vh;
+            margin-bottom: 10vh;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
         }
 
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-size: clamp(1.8rem, 5vw, 3rem);
-            font-weight: 300;
-            letter-spacing: -0.02em;
-        }
-
-        p {
-            color: #555;
-            line-height: 1.7;
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            margin-bottom: 15px;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 30px;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        .photo.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Phone-specific optimizations */
@@ -93,50 +64,10 @@
                 background-attachment: scroll; /* Better performance on mobile */
             }
             
-            .content {
-                padding: 25px;
-                margin: 15px;
-                border-radius: 12px;
+            .photo {
+                width: 95vw;
+                height: 85vh;
             }
-
-            .cta-button {
-                padding: 15px 25px;
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Very small phones */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .content {
-                padding: 20px;
-                max-width: 95%;
-            }
-        }
-
-        /* Landscape orientation on phones */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .container {
-                justify-content: flex-start;
-                padding-top: 30px;
-            }
-            
-            .content {
-                padding: 20px 30px;
-            }
-        }
-
-        /* Loading animation */
-        .fade-in {
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Netlify badge - remove this if you don't want it */
@@ -157,13 +88,13 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="content fade-in">
-            <h1>Emma Beckham</h1>
-            <p>Miami based model.</p>
-            <p>Website coming soon.</p>
-            <a href="#" class="cta-button" onclick="alert('Add your link here!')">Get Started</a>
-        </div>
+    <div class="gallery">
+        <img src="P1.png" alt="Photo 1" class="photo">
+        <img src="P2.png" alt="Photo 2" class="photo">
+        <img src="P3.png" alt="Photo 3" class="photo">
+        <img src="P4.png" alt="Photo 4" class="photo">
+        <img src="P5.png" alt="Photo 5" class="photo">
+        <img src="P6.png" alt="Photo 6" class="photo">
     </div>
 
     <div class="netlify-badge">
@@ -183,8 +114,26 @@
             // Add smooth scroll behavior
             document.documentElement.style.scrollBehavior = 'smooth';
 
-            // Basic analytics placeholder - replace with your analytics
-            console.log('Page loaded successfully on', new Date().toISOString());
+            // Scroll-triggered fade-in for photos
+            const photos = document.querySelectorAll('.photo');
+            
+            function checkPhotos() {
+                const triggerBottom = window.innerHeight * 0.8;
+                
+                photos.forEach(photo => {
+                    const photoTop = photo.getBoundingClientRect().top;
+                    
+                    if (photoTop < triggerBottom) {
+                        photo.classList.add('visible');
+                    }
+                });
+            }
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkPhotos);
+            
+            // Initial check
+            checkPhotos();
         });
 
         // Handle orientation changes on mobile
